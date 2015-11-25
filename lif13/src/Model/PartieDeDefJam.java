@@ -16,6 +16,7 @@ public class PartieDeDefJam extends Observable{
     private Board board;
     private Player ActivePlayer;
     private int Phase;
+    private int tour;
     
     public PartieDeDefJam(Player Player1, Player Player2, Board brd){
         this.board=brd;
@@ -47,5 +48,14 @@ public class PartieDeDefJam extends Observable{
     public void setPhase(int Phase) {
         this.Phase = Phase;
     }
+
+    public int getTour() {
+        return tour;
+    }
+
+    public void setTour(int tour) {
+        this.tour = tour;
+    }
+    
     
 }

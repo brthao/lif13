@@ -18,6 +18,7 @@ public class Player extends Observable{
     private int POINTS_DE_VIE;
     private int NB_RESSOURCES;
     private int NB_RESSOURCES_MAX;
+    private Card[] Cards;
     
 
    
@@ -62,4 +63,14 @@ public class Player extends Observable{
     public String getNOM(){
         return this.NOM;
     }
+
+    public Card[] getCards() {
+        return Cards;
+    }
+
+    public void setCards(Card[] Cards) {
+        this.Cards = Cards;
+    }
+    
+    
 }

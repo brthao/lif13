@@ -20,6 +20,8 @@ public class Card extends Observable{
     private boolean exhausted;
     private boolean attacking;
     private boolean defensing;
+    private int x;
+    private int y;
 
     public Card(String name, int cost, int atk, int def) {
         this.name = name;
@@ -83,7 +85,24 @@ public class Card extends Observable{
     public void setDefensing(boolean defensing) {
         this.defensing = defensing;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
    
+    
     
     
 }
