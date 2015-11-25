@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
  * @author p1508674
  */
-public class Card {
+public class Card extends Observable{
     
     private String name;
     private int cost;

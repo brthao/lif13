@@ -5,17 +5,20 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
  * @author p1511624
  */
-public class Player {
+public class Player extends Observable{
 
     
     private final String NOM;
     private int POINTS_DE_VIE;
     private int NB_RESSOURCES;
     private int NB_RESSOURCES_MAX;
+    
 
    
 
@@ -27,11 +30,7 @@ public class Player {
     
     public void upRessources(){
         this.setNB_RESSOURCES_MAX(this.getNB_RESSOURCES_MAX()+1);
-        this.setNB_RESSOURCES(NB_RESSOURCES_MAX);
-    }
-    
-    public void setCardAttack(Carte carte){
-        
+        this.setNB_RESSOURCES(this.getNB_RESSOURCES_MAX);
     }
     
     public int getNB_RESSOURCES_MAX() {

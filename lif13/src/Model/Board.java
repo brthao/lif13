@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
  * @author p1508674
  */
-public class Board {
+public class Board extends Observable{
     private int lenght;
     private int width;
     private Card cardTable[][];
