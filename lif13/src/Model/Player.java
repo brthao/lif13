@@ -14,14 +14,13 @@ import java.util.Observable;
 public class Player extends Observable{
 
     
-    private final String NOM;
+    private String NOM;
     private int POINTS_DE_VIE;
     private int NB_RESSOURCES;
     private int NB_RESSOURCES_MAX;
     private Card[] Cards;
-    
 
-   
+    
 
     public Player(String Nom){
         this.NOM=Nom;
@@ -29,6 +28,15 @@ public class Player extends Observable{
         this.NB_RESSOURCES = 0;
     }
     
+    public Player(){
+        
+    }
+    public void setNOM(String NOM) {
+        this.NOM = NOM;
+    }
+    
+
+   
     public void upRessources(){
         this.setNB_RESSOURCES_MAX(this.getNB_RESSOURCES_MAX()+1);
         this.setNB_RESSOURCES(this.getNB_RESSOURCES_MAX());

@@ -25,6 +25,7 @@ public class CardDisplay extends javax.swing.JPanel {
         defense.setText(String.valueOf(def));
         System.out.println("HELLO");
         this.setVisible(true);
+        revalidate();
     }
 
     /**

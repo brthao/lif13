@@ -5,6 +5,9 @@
  */
 package Controller;
 
+import Model.Player;
+import View.MainView;
+
 /**
  *
  * @author p1508674
@@ -16,6 +19,10 @@ public class MainController {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Player p1 = new Player();
+        Player p2 = new Player();
+        MainView mv = new MainView(p1,p2);
+        mv.setVisible(true);
     }
     
 }
