@@ -30,7 +30,7 @@ public class Player extends Observable{
     
     public void upRessources(){
         this.setNB_RESSOURCES_MAX(this.getNB_RESSOURCES_MAX()+1);
-        this.setNB_RESSOURCES(this.getNB_RESSOURCES_MAX);
+        this.setNB_RESSOURCES(this.getNB_RESSOURCES_MAX());
     }
     
     public int getNB_RESSOURCES_MAX() {
