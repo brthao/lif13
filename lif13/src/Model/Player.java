@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -18,7 +19,7 @@ public class Player extends Observable{
     private int POINTS_DE_VIE;
     private int NB_RESSOURCES;
     private int NB_RESSOURCES_MAX;
-    private Card[] Cards;
+    private ArrayList<Card> Cards;
 
     
 
@@ -26,10 +27,12 @@ public class Player extends Observable{
         this.NOM=Nom;
         this.POINTS_DE_VIE = 10;
         this.NB_RESSOURCES = 0;
+        Cards=new ArrayList<>();
     }
     
     public Player(){
         
+        Cards=new ArrayList<>();
     }
     public void setNOM(String NOM) {
         this.NOM = NOM;
@@ -72,11 +75,11 @@ public class Player extends Observable{
         return this.NOM;
     }
 
-    public Card[] getCards() {
+    public ArrayList<Card> getCards() {
         return Cards;
     }
 
-    public void setCards(Card[] Cards) {
+    public void setCards(ArrayList<Card>Cards) {
         this.Cards = Cards;
     }
     
