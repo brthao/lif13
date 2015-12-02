@@ -22,6 +22,7 @@ public class Card extends Observable{
     private boolean defensing;
     private int x;
     private int y;
+    private int YDépart;
 
     public Card(String name, int cost, int atk, int def) {
         this.name = name;
@@ -100,6 +101,14 @@ public class Card extends Observable{
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getYDépart() {
+        return yDépart;
+    }
+
+    public void setYDépart(int YDépart) {
+        this.YDépart = YDépart;
     }
    
     

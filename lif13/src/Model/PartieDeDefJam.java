@@ -17,12 +17,13 @@ public class PartieDeDefJam extends Observable{
     private Player ActivePlayer;
     private int Phase;
     private int tour;
+    private Boolean PartieTerminee = false;
     
-    public PartieDeDefJam(Player Player1, Player Player2, Board brd){
-        this.board=brd;
+    public PartieDeDefJam(Player Player1, Player Player2){
         this.Players = new Player[2];
         this.Players[0]= Player1;
         this.Players[1]= Player2;
+        this.board= new Board(5,4,this.Players);
     }
 
     public Board getBoard() {
@@ -55,6 +56,14 @@ public class PartieDeDefJam extends Observable{
 
     public void setTour(int tour) {
         this.tour = tour;
+    }
+
+    public Boolean getPartieTerminee() {
+        return PartieTerminee;
+    }
+
+    public void setPartieTerminee(Boolean PartieTerminee) {
+        this.PartieTerminee = PartieTerminee;
     }
     
     

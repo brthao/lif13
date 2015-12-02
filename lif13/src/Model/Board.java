@@ -14,12 +14,13 @@ import java.util.Observable;
 public class Board extends Observable{
     private int length;
     private int width;
-    private Card MainJ1[];
-    private Card MainJ2[];
-    private Card FieldJ1[];
-    private Card FieldJ2[];
-    private Card BattleJ1[];
-    private Card BattleJ2[];
+    int MainJ1 = 0;
+    int FieldJ1 = 1;
+    int BattleJ1 = 2;
+    int BattleJ2 = 3;
+    int FieldJ2 = 4;
+    int MainJ2 = 5;
+    
     private Card cardTable[][];
     private Player players[];
 
@@ -27,61 +28,7 @@ public class Board extends Observable{
         this.length = length;
         this.width = width;
         this.players = players;
-        MainJ1 = new Card[4];
-        MainJ2 = new Card[4];
-        FieldJ1 = new Card[4];
-        FieldJ2 = new Card[4];
-        BattleJ1 = new Card[4];
-        BattleJ2 = new Card[4];
         cardTable = new Card[6][4];
-    }
-
-    public Card[] getMainJ1() {
-        return MainJ1;
-    }
-
-    public void setMainJ1(Card[] MainJ1) {
-        this.MainJ1 = MainJ1;
-    }
-
-    public Card[] getMainJ2() {
-        return MainJ2;
-    }
-
-    public void setMainJ2(Card[] MainJ2) {
-        this.MainJ2 = MainJ2;
-    }
-
-    public Card[] getFieldJ1() {
-        return FieldJ1;
-    }
-
-    public void setFieldJ1(Card[] FieldJ1) {
-        this.FieldJ1 = FieldJ1;
-    }
-
-    public Card[] getFieldJ2() {
-        return FieldJ2;
-    }
-
-    public void setFieldJ2(Card[] FieldJ2) {
-        this.FieldJ2 = FieldJ2;
-    }
-
-    public Card[] getBattleJ1() {
-        return BattleJ1;
-    }
-
-    public void setBattleJ1(Card[] BattleJ1) {
-        this.BattleJ1 = BattleJ1;
-    }
-
-    public Card[] getBattleJ2() {
-        return BattleJ2;
-    }
-
-    public void setBattleJ2(Card[] BattleJ2) {
-        this.BattleJ2 = BattleJ2;
     }
 
     public Card[][] getCardTable() {
@@ -100,5 +47,39 @@ public class Board extends Observable{
         this.players = players;
     }
     
+    public void initialiseMain(Card J1[], Card J2[]){
+        this.cardTable[MainJ1] = J1;
+        this.cardTable[MainJ2] = J2;
+    }
     
+    public void addToField(Card card, Player player){
+        int field;
+        if (player == this.players[0])
+            field = FieldJ1;
+        else
+            field = FieldJ2;
+        this.cardTable[field][card.getYDépart()]=card;
+        this.cardTable[field][card.getYDépart()].setX(field);
+        this.cardTable[field][card.getYDépart()].setY(card.getYDépart());   
+        this.cardTable[card.getX()][card.getY()] = null;
+
+    }
+    
+    public void addToBattle(Card card, Player player, int y){
+        int battle;
+        if (player == this.players[0])
+            battle = BattleJ1;
+        else
+            battle = BattleJ2;
+        int i =0;
+        while(this.cardTable[battle][i]!=null || i<4){
+            i++;
+        }
+        if(this.cardTable[battle][i]!=null){
+            this.cardTable[battle][i]=card;
+            this.cardTable[battle][i].setX(battle);
+            this.cardTable[battle][i].setY(i);
+            this.cardTable[card.getX()][card.getY()] = null;
+        }
+    }
 }
