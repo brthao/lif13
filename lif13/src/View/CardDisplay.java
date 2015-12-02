@@ -23,7 +23,6 @@ public class CardDisplay extends javax.swing.JPanel {
         cost.setText(String.valueOf(cst));
         attack.setText(String.valueOf(atk));
         defense.setText(String.valueOf(def));
-        System.out.println("HELLO");
         this.setVisible(true);
         revalidate();
     }
@@ -46,20 +45,31 @@ public class CardDisplay extends javax.swing.JPanel {
         defenseLabel = new javax.swing.JLabel();
         defense = new javax.swing.JLabel();
 
+        setFocusable(false);
+        setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
+
+        nameLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         nameLabel.setText("Name :");
 
+        costLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         costLabel.setText("Cost : ");
 
+        cost.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         cost.setText("cost");
 
+        name.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         name.setText("name");
 
+        attackLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         attackLabel.setText("Attack : ");
 
+        attack.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         attack.setText("atk");
 
+        defenseLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         defenseLabel.setText("Defense :");
 
+        defense.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         defense.setText("def");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -77,7 +87,7 @@ public class CardDisplay extends javax.swing.JPanel {
                         .addComponent(attackLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(attack)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(costLabel)
@@ -98,7 +108,7 @@ public class CardDisplay extends javax.swing.JPanel {
                     .addComponent(costLabel)
                     .addComponent(cost)
                     .addComponent(name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(attackLabel)
                     .addComponent(attack)
