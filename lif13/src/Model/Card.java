@@ -104,7 +104,7 @@ public class Card extends Observable{
     }
 
     public int getYDépart() {
-        return yDépart;
+        return YDépart;
     }
 
     public void setYDépart(int YDépart) {

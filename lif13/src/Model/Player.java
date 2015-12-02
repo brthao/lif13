@@ -45,6 +45,14 @@ public class Player extends Observable{
         this.setNB_RESSOURCES(this.getNB_RESSOURCES_MAX());
     }
     
+    public void decreaseRessources(int i){
+        this.setNB_RESSOURCES(this.getNB_RESSOURCES()-i);
+    }
+    
+    public void decreasePdv(int i){
+        this.setPOINTS_DE_VIE(this.getPOINTS_DE_VIE()-i);
+    }
+    
     public int getNB_RESSOURCES_MAX() {
         return NB_RESSOURCES_MAX;
     }
@@ -52,8 +60,6 @@ public class Player extends Observable{
     public void setNB_RESSOURCES_MAX(int NB_RESSOURCES_MAX) {
         this.NB_RESSOURCES_MAX = NB_RESSOURCES_MAX;
     }
-    
-    
     
     public int getPOINTS_DE_VIE() {
         return POINTS_DE_VIE;
