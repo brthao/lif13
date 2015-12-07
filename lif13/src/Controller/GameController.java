@@ -6,13 +6,10 @@
 package Controller;
 
 import Model.PartieDeDefJam;
-import Model.Player;
 import View.GameView;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -42,7 +39,7 @@ public class GameController {
         
         listPanel = gv.getTabPanels();
         listPanel.stream().forEach((j) -> {
-            j.addMouseListener(new OnClick(j));
+            j.addMouseListener(new MouseAction(j));
          });
         this.game = new PartieDeDefJam(mc.getP1(),mc.getP2());
         gv.getTour().setText(String.valueOf(game.getTour()));

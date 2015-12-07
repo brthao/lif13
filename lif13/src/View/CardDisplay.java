@@ -5,24 +5,31 @@
  */
 package View;
 
+import Model.Card;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author p1508674
  */
-public class CardDisplay extends javax.swing.JPanel {
+public class CardDisplay extends javax.swing.JPanel implements ActionListener {
 
+    private Card card;
     /**
      * Creates new form CardDisp
      */
     public CardDisplay() {
         initComponents();
     }
-    public CardDisplay(String nam,int cst,int atk,int def){
+    public CardDisplay(Card card){
+        this.card = card;
         initComponents();
-        name.setText(nam);
-        cost.setText(String.valueOf(cst));
-        attack.setText(String.valueOf(atk));
-        defense.setText(String.valueOf(def));
+        name.setText(card.getName());
+        cost.setText(String.valueOf(card.getCost()));
+        attack.setText(String.valueOf(card.getAtk()));
+        defense.setText(String.valueOf(card.getDef()));
         this.setVisible(true);
         revalidate();
     }
@@ -45,6 +52,7 @@ public class CardDisplay extends javax.swing.JPanel {
         defenseLabel = new javax.swing.JLabel();
         defense = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setFocusable(false);
         setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
 
@@ -108,7 +116,7 @@ public class CardDisplay extends javax.swing.JPanel {
                     .addComponent(costLabel)
                     .addComponent(cost)
                     .addComponent(name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(attackLabel)
                     .addComponent(attack)
@@ -129,4 +137,9 @@ public class CardDisplay extends javax.swing.JPanel {
     private javax.swing.JLabel name;
     private javax.swing.JLabel nameLabel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.setBackground(Color.red);
+    }
 }

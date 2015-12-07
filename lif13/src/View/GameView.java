@@ -39,15 +39,19 @@ public class GameView extends javax.swing.JFrame implements Observer{
         
     }
     public GameView(GameController gc) {
-        gc=gc;
-        tabJPanel = new JPanel[6][4];
+       this.gc=gc;
+       tabJPanel = new JPanel[6][4];
        initComponents();
        jPanel1.setLayout(new BorderLayout());
        
+        /*this.pack();
+        GameView.setDefaultLookAndFeelDecorated(true);
+        this.setExtendedState(GameView.MAXIMIZED_BOTH);*/
+       
        GridLayout gl = new GridLayout(6,4);
        
+       
        JPanel gridContainer = new JPanel();
-       gridContainer.setSize(600, 600);
        gridContainer.setVisible(true);
        gridContainer.setLayout(gl);
      
@@ -55,14 +59,14 @@ public class GameView extends javax.swing.JFrame implements Observer{
        int x=0;
        for(int i = 0 ; i < 24 ; i++){
            JPanel tmp = new JPanel();
-            //tmp.setSize(550, 350);
             tmp.setBorder(BorderFactory.createLineBorder(Color.black));
-            
+            tmp.setLayout(new BorderLayout());
            listPanel.add(tmp);
            tabJPanel[x][j]=tmp;
            if(j==3){
                j=0;
-               x++;}
+               x++;
+           }
            else
                j++;
            
@@ -74,7 +78,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
            for (int z = 0 ; z<4 ; z++){
                JLabel jl = new JLabel();
                jl.setText(i+"-"+z);
-               tabJPanel[i][z].add(jl);
+               //tabJPanel[i][z].add(jl);
            }
        }
        for (int i =0 ; i<4; i++){
@@ -101,20 +105,20 @@ public class GameView extends javax.swing.JFrame implements Observer{
         nextTour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1100, 850));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setMinimumSize(new java.awt.Dimension(600, 700));
+        jPanel1.setMinimumSize(new java.awt.Dimension(200, 200));
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 600));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 811, Short.MAX_VALUE)
+            .addGap(0, 750, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 698, Short.MAX_VALUE)
+            .addGap(0, 714, Short.MAX_VALUE)
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -136,7 +140,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
@@ -146,23 +150,23 @@ public class GameView extends javax.swing.JFrame implements Observer{
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(nextTour)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(384, 384, 384)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nbTour)
                         .addGap(42, 42, 42)
-                        .addComponent(nextTour)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addComponent(nextTour))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

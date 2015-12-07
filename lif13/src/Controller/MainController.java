@@ -9,6 +9,9 @@ import Model.Card;
 import Model.Player;
 import View.CardDisplay;
 import View.MainView;
+import java.awt.Component;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -78,16 +81,17 @@ public class MainController {
         visuCard2 = new ArrayList<>();
         
           for(Card c : p1.getCards()){
-            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
+            CardDisplay cd = new CardDisplay(c);
             cd.setVisible(true);
+            cd.addMouseListener(new MouseAction(cd));
             visuCard1.add(cd);
-            //j1.add(cd);
             
         }
         
         for(Card c : p2.getCards()){
-            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
+            CardDisplay cd = new CardDisplay(c);
             cd.setVisible(true);
+            cd.addMouseListener(new MouseAction(cd));
             visuCard2.add(cd);
             
         }
