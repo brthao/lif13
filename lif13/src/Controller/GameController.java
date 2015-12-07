@@ -5,8 +5,11 @@
  */
 package Controller;
 
+import Model.PartieDeDefJam;
 import Model.Player;
 import View.GameView;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,31 +22,43 @@ import javax.swing.JPanel;
  */
 public class GameController {
 
-    private Player p1;
-    private Player p2;
+    private MainController mc;
     private GameView gv;
-  
+    private PartieDeDefJam game;
     
-    private ArrayList<JPanel> tabPanels;
+    private ArrayList<JPanel> listPanel;
     
-    public GameController(Player p1,Player p2) {
-        this.p1 = p1;
-        this.p2 = p2;
-        tabPanels  = new ArrayList<>();
+    public GameController(MainController mc) {
+        this.mc = mc;
+        listPanel  = new ArrayList<>();
         
         initialize();
     }
     
     public final void initialize(){
-        gv = new GameView();
+        gv = new GameView(this);
         gv.setVisible(true);
         
         
-        tabPanels = gv.getTabPanels();
-        tabPanels.stream().forEach((j) -> {
+        listPanel = gv.getTabPanels();
+        listPanel.stream().forEach((j) -> {
             j.addMouseListener(new OnClick(j));
          });
-        
+        this.game = new PartieDeDefJam(mc.getP1(),mc.getP2());
+        gv.getTour().setText(String.valueOf(game.getTour()));
+        gv.setGame(game);
+        gv.getGame().addObserver(gv);
+        gv.getNextTurn().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gv.getGame().upTour();
+            }
+        });
+    }
+
+    public MainController getMc() {
+        return mc;
     }
     
     

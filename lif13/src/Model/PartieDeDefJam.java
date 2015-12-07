@@ -90,6 +90,8 @@ public class PartieDeDefJam extends Observable{
 
     public void upTour() {
         this.tour = tour+1;
+        setChanged();
+	notifyObservers();
     }
 
     public Boolean getPartieTerminee() {

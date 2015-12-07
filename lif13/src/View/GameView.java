@@ -5,30 +5,42 @@
  */
 package View;
 
+import Controller.GameController;
+import Model.PartieDeDefJam;
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
+
 
 /**
  *
  * @author p1508674
  */
-public class GameView extends javax.swing.JFrame {
+public class GameView extends javax.swing.JFrame implements Observer{
 
-    private ArrayList<JPanel> tabPanels = new ArrayList<>();
+    private ArrayList<JPanel> listPanel = new ArrayList<>();
+    private JPanel tabJPanel[][];
+    private PartieDeDefJam game ;
+    private GameController gc;
     public ArrayList<JPanel> getTabPanels(){
-        return this.tabPanels;
+        return this.listPanel;
     }
     /**
      * Creates new form GameView
      */
-    public GameView() {
+    public GameView(){
+        
+    }
+    public GameView(GameController gc) {
+        gc=gc;
+        tabJPanel = new JPanel[6][4];
        initComponents();
        jPanel1.setLayout(new BorderLayout());
        
@@ -39,19 +51,36 @@ public class GameView extends javax.swing.JFrame {
        gridContainer.setVisible(true);
        gridContainer.setLayout(gl);
      
-       
+       int j=0;
+       int x=0;
        for(int i = 0 ; i < 24 ; i++){
-            JPanel tmp = new JPanel();
-           
+           JPanel tmp = new JPanel();
             //tmp.setSize(550, 350);
             tmp.setBorder(BorderFactory.createLineBorder(Color.black));
             
-           tabPanels.add(tmp);
+           listPanel.add(tmp);
+           tabJPanel[x][j]=tmp;
+           if(j==3){
+               j=0;
+               x++;}
+           else
+               j++;
+           
        }
-       for(JPanel jp : tabPanels){
+       for(JPanel jp : listPanel){
            gridContainer.add(jp);
        }
-       
+       for (int i= 0 ; i<6 ; i++){
+           for (int z = 0 ; z<4 ; z++){
+               JLabel jl = new JLabel();
+               jl.setText(i+"-"+z);
+               tabJPanel[i][z].add(jl);
+           }
+       }
+       for (int i =0 ; i<4; i++){
+           tabJPanel[5][i].add(gc.getMc().getVisuCard1().get(i));
+           tabJPanel[0][i].add(gc.getMc().getVisuCard2().get(i));
+       }
        
        
        jPanel1.add(gridContainer,BorderLayout.CENTER);
@@ -67,6 +96,9 @@ public class GameView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        nbTour = new javax.swing.JLabel();
+        nextTour = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,6 +117,19 @@ public class GameView extends javax.swing.JFrame {
             .addGap(0, 698, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("TOUR :");
+
+        nbTour.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        nbTour.setText("jLabel2");
+
+        nextTour.setText("Next Turn");
+        nextTour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextTourActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,18 +137,40 @@ public class GameView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(nbTour)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(nextTour)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(384, 384, 384)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nbTour)
+                        .addGap(42, 42, 42)
+                        .addComponent(nextTour)))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void nextTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextTourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nextTourActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,7 +207,31 @@ public class GameView extends javax.swing.JFrame {
         });
     }
 
+    public JLabel getTour(){
+        return this.nbTour;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel nbTour;
+    private javax.swing.JButton nextTour;
     // End of variables declaration//GEN-END:variables
+
+    public void setGame(PartieDeDefJam game) {
+        this.game = game;
+    }
+
+    public PartieDeDefJam getGame() {
+        return game;
+    }
+
+    public JButton getNextTurn(){
+        return nextTour;
+    }
+    
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        nbTour.setText(String.valueOf(game.getTour()));
+    }
 }

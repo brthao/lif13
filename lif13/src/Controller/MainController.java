@@ -7,7 +7,9 @@ package Controller;
 
 import Model.Card;
 import Model.Player;
+import View.CardDisplay;
 import View.MainView;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,13 +17,44 @@ import View.MainView;
  */
 public class MainController {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Player p1 = new Player();
-        Player p2 = new Player();
+        private GameController g;
+        private ArrayList<CardDisplay> visuCard1;
+        private ArrayList<CardDisplay> visuCard2;
+        private Player p1;
+        private Player p2;
+
+    public ArrayList<CardDisplay> getVisuCard1() {
+        return visuCard1;
+    }
+
+    public ArrayList<CardDisplay> getVisuCard2() {
+        return visuCard2;
+    }
+
+    public void setG(GameController g) {
+        this.g = g;
+    }
+
+        
+    public GameController getG() {
+        return g;
+    }
+
+    public Player getP1() {
+        return p1;
+    }
+
+    public Player getP2() {
+        return p2;
+    }
+
+    public MainController() {
+        initialize();
+    }
+    
+    public void initialize(){
+         p1 = new Player();
+         p2 = new Player();
         
         Card c1 = new Card("Orelsan",2,2,3);
         Card c2= new Card("Eminem",3,5,2);
@@ -40,9 +73,39 @@ public class MainController {
         p2.getCards().add(c6);
         p2.getCards().add(c7);
         p2.getCards().add(c8);
+        visuCard1 = new ArrayList<>();
+        
+        visuCard2 = new ArrayList<>();
+        
+          for(Card c : p1.getCards()){
+            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
+            cd.setVisible(true);
+            visuCard1.add(cd);
+            //j1.add(cd);
+            
+        }
+        
+        for(Card c : p2.getCards()){
+            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
+            cd.setVisible(true);
+            visuCard2.add(cd);
+            
+        }
+        
+    }
         
         
-        MainView mv = new MainView(p1,p2);
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+      
+        
+        MainController mc = new MainController();
+        
+        //MainView mv = new MainView(mc.getP1(),mc.getP2(),mc.getG());
+        MainView mv = new MainView(mc);
         mv.setVisible(true);
     }
     

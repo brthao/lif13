@@ -6,6 +6,7 @@
 package View;
 
 import Controller.GameController;
+import Controller.MainController;
 import Model.Card;
 import Model.Player;
 import java.awt.BorderLayout;
@@ -20,16 +21,15 @@ import javax.swing.JPanel;
  */
 public class MainView extends javax.swing.JFrame {
     
-    private Player p1;
-    private Player p2;
+   MainController mc;
     /**
      * Creates new form Main
      * @param p1
      * @param p2
+     * @param g
      */
-    public MainView(Player p1, Player p2) {
-        this.p1 = p1;
-        this.p2 = p2;
+    public MainView(MainController mc) {
+        this.mc = mc;
           
         initComponents();
         
@@ -43,20 +43,14 @@ public class MainView extends javax.swing.JFrame {
         j2.setSize(jPanel2.getSize().width, jPanel2.getSize().height);
         j2.setBackground(Color.blue);
         
-        for(Card c : p1.getCards()){
-            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
-            cd.setVisible(true);
+      //for ajouter a j1 et j2 cardDisplay des 2 listes
+        for(CardDisplay cd : mc.getVisuCard1()){
             j1.add(cd);
-            
         }
         
-        for(Card c : p2.getCards()){
-            CardDisplay cd = new CardDisplay(c.getName(),c.getCost(),c.getAtk(),c.getDef());
-            cd.setVisible(true);
+        for(CardDisplay cd : mc.getVisuCard2()){
             j2.add(cd);
         }
-        
-        
         /*j1.add(cd1);
         j1.add(cd2);
         */
@@ -262,13 +256,13 @@ public class MainView extends javax.swing.JFrame {
 
     private void play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play
         // TODO add your handling code here:
-        p1.setNOM(textfield1.getText());
-        p2.setNOM(textfield2.getText());
+        mc.getP1().setNOM(textfield1.getText());
+        mc.getP2().setNOM(textfield2.getText());
 
-        System.out.println("p1 = "+p1.getNOM()+" p2 = "+p2.getNOM());
+        System.out.println("p1 = "+mc.getP1().getNOM()+" p2 = "+mc.getP2().getNOM());
         
         this.setVisible(false);
-        GameController g = new GameController(p1, p2);
+        mc.setG(new GameController(mc));
         
     }//GEN-LAST:event_play
 
@@ -308,6 +302,7 @@ public class MainView extends javax.swing.JFrame {
         });
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

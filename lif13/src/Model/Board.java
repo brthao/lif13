@@ -14,12 +14,12 @@ import java.util.Observable;
 public class Board extends Observable{
     private int length;
     private int width;
-    int HandJ1 = 0;
-    int FieldJ1 = 1;
-    int BattleJ1 = 2;
-    int BattleJ2 = 3;
-    int FieldJ2 = 4;
-    int HandJ2 = 5;
+    int HandJ1 = 5;
+    int FieldJ1 = 4;
+    int BattleJ1 = 3;
+    int BattleJ2 = 2;
+    int FieldJ2 = 1;
+    int HandJ2 = 0;
     
     private Card cardTable[][];
     private Player players[];
