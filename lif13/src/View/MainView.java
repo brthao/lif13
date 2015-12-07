@@ -121,7 +121,6 @@ public class MainView extends javax.swing.JFrame {
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setMinimumSize(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -270,6 +269,7 @@ public class MainView extends javax.swing.JFrame {
         
         this.setVisible(false);
         GameController g = new GameController(p1, p2);
+        new GameView().setVisible(true);
     }//GEN-LAST:event_play
 
     /**
