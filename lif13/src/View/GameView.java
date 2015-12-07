@@ -5,17 +5,56 @@
  */
 package View;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+
 /**
  *
  * @author p1508674
  */
 public class GameView extends javax.swing.JFrame {
 
+    private ArrayList<JPanel> tabPanels = new ArrayList<>();
+    public ArrayList<JPanel> getTabPanels(){
+        return this.tabPanels;
+    }
     /**
      * Creates new form GameView
      */
     public GameView() {
-        initComponents();
+       initComponents();
+       jPanel1.setLayout(new BorderLayout());
+       
+       GridLayout gl = new GridLayout(6,4);
+       
+       JPanel gridContainer = new JPanel();
+       gridContainer.setSize(600, 600);
+       gridContainer.setVisible(true);
+       gridContainer.setLayout(gl);
+     
+       
+       for(int i = 0 ; i < 24 ; i++){
+            JPanel tmp = new JPanel();
+           
+            //tmp.setSize(550, 350);
+            tmp.setBorder(BorderFactory.createLineBorder(Color.black));
+            
+           tabPanels.add(tmp);
+       }
+       for(JPanel jp : tabPanels){
+           gridContainer.add(jp);
+       }
+       
+       
+       
+       jPanel1.add(gridContainer,BorderLayout.CENTER);
     }
 
     /**
@@ -27,27 +66,40 @@ public class GameView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Partie");
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setMinimumSize(new java.awt.Dimension(600, 700));
+        jPanel1.setPreferredSize(new java.awt.Dimension(600, 600));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 811, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 698, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(172, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(182, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
         );
 
         pack();
@@ -89,6 +141,6 @@ public class GameView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

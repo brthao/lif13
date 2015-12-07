@@ -269,7 +269,7 @@ public class MainView extends javax.swing.JFrame {
         
         this.setVisible(false);
         GameController g = new GameController(p1, p2);
-        new GameView().setVisible(true);
+        
     }//GEN-LAST:event_play
 
     /**
