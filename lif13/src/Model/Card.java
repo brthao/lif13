@@ -23,6 +23,7 @@ public class Card extends Observable{
     private int x;
     private int y;
     private int YDépart;
+    private Player player;
 
     public Card(String name, int cost, int atk, int def) {
         this.name = name;
@@ -110,7 +111,16 @@ public class Card extends Observable{
     public void setYDépart(int YDépart) {
         this.YDépart = YDépart;
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
    
+    
     
     
     

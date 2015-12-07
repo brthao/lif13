@@ -14,12 +14,12 @@ import java.util.Observable;
 public class Board extends Observable{
     private int length;
     private int width;
-    int MainJ1 = 0;
+    int HandJ1 = 0;
     int FieldJ1 = 1;
     int BattleJ1 = 2;
     int BattleJ2 = 3;
     int FieldJ2 = 4;
-    int MainJ2 = 5;
+    int HandJ2 = 5;
     
     private Card cardTable[][];
     private Player players[];
@@ -47,13 +47,14 @@ public class Board extends Observable{
         this.players = players;
     }
     
-    public void initialiseMain(Card J1[], Card J2[]){
-        this.cardTable[MainJ1] = J1;
-        this.cardTable[MainJ2] = J2;
+    public void initialiseHand(Card J1[], Card J2[]){
+        this.cardTable[HandJ1] = J1;
+        this.cardTable[HandJ2] = J2;
     }
     
-    public void addToField(Card card, Player player){
+    public void addToField(Card card, Player player, int phase){
         int field;
+        int defend = 0;
         if (player == this.players[0])
             field = FieldJ1;
         else
@@ -62,24 +63,33 @@ public class Board extends Observable{
         this.cardTable[field][card.getYDépart()].setX(field);
         this.cardTable[field][card.getYDépart()].setY(card.getYDépart());   
         this.cardTable[card.getX()][card.getY()] = null;
-
+        this.cardTable[field][card.getYDépart()].setAttacking(false);
+        this.cardTable[field][card.getYDépart()].setDefensing(false);
+        if(phase == defend)
+            this.cardTable[field][card.getYDépart()].setExhausted(true);
     }
     
-    public void addToBattle(Card card, Player player, int y){
+    public void addToBattle(Card card, Player player, int y, int phase){
         int battle;
+        int defend = 0;
+        int attack = 2;
         if (player == this.players[0])
             battle = BattleJ1;
         else
             battle = BattleJ2;
-        int i =0;
-        while(this.cardTable[battle][i]!=null || i<4){
-            i++;
-        }
-        if(this.cardTable[battle][i]!=null){
-            this.cardTable[battle][i]=card;
-            this.cardTable[battle][i].setX(battle);
-            this.cardTable[battle][i].setY(i);
+        if (this.cardTable[battle][y]==null&&!card.isExhausted()){
+            this.cardTable[battle][y]=card;
+            this.cardTable[battle][y].setX(battle);
+            this.cardTable[battle][y].setY(y);
+            if (phase==attack)
+                this.cardTable[battle][y].setAttacking(true);
+            if (phase==defend)
+                this.cardTable[battle][y].setDefensing(true);
             this.cardTable[card.getX()][card.getY()] = null;
         }
+    }
+
+    public void destructCard(Card card) {
+        this.cardTable[card.getX()][card.getY()]=null;
     }
 }
