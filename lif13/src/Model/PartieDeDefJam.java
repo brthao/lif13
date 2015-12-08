@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
@@ -30,6 +31,8 @@ public class PartieDeDefJam extends Observable{
         this.Players[1]= Player2;
         this.board= new Board(5,4,this.Players);
         this.tour = 1;
+        this.Phase = Defense;
+        this.ActivePlayer=Players[0];
     }
 
     
@@ -40,17 +43,21 @@ public class PartieDeDefJam extends Observable{
             player.decreasePdv(card.getAtk());
         if (player.getPOINTS_DE_VIE()<=0)
             this.setPartieTerminee(true);
+        setChanged();
+	notifyObservers();
     }
     
     public void playerDefending(Card cardAttack, Card cardDefense) {
         if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()>cardDefense.getAtk())
-            this.board.destructCard(cardDefense);
+            this.board.destroyCard(cardDefense);
         if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
-            this.board.destructCard(cardAttack);
-            this.board.destructCard(cardDefense);
+            this.board.destroyCard(cardAttack);
+            this.board.destroyCard(cardDefense);
         }
         if (cardAttack.getAtk()<cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk())
-            this.board.destructCard(cardAttack);
+            this.board.destroyCard(cardAttack);
+        setChanged();
+	notifyObservers();
     }
     
     public Board getBoard() {
@@ -80,8 +87,12 @@ public class PartieDeDefJam extends Observable{
     public void nextPhase(){
         if (this.Phase != Attaque)
             this.Phase = this.Phase+1;
-        else
+        else{
             this.Phase = 0;
+            nextPlayer();
+        }
+       setChanged();
+        notifyObservers();
     }
     
     public int getTour() {
@@ -89,9 +100,18 @@ public class PartieDeDefJam extends Observable{
     }
 
     public void upTour() {
+        Players[0].setHasPlayed(false);
+        Players[1].setHasPlayed(false);
+        Players[0].upRessources();
+        Players[1].upRessources();
         this.tour = tour+1;
-        setChanged();
-	notifyObservers();
+    }
+    
+    public void initiateObserver(Observer o){
+        this.addObserver(o);
+        this.getBoard().addObserver(o);
+        this.getPlayers()[0].addObserver(o);
+        this.getPlayers()[1].addObserver(o);
     }
 
     public Boolean getPartieTerminee() {
@@ -100,9 +120,25 @@ public class PartieDeDefJam extends Observable{
 
     public void setPartieTerminee(Boolean PartieTerminee) {
         this.PartieTerminee = PartieTerminee;
+        setChanged();
+	notifyObservers();
+    }
+
+    public Player[] getPlayers() {
+        return Players;
     }
 
 
-    
+    public void nextPlayer(){
+        this.ActivePlayer.setHasPlayed(true);
+        if(Players[0].isHasPlayed()&&Players[1].isHasPlayed())
+            upTour();
+        if(this.ActivePlayer==Players[0])
+            this.ActivePlayer=Players[1];
+        else
+            this.ActivePlayer=Players[0];
+        setChanged();
+        notifyObservers("Changement");
+    }
     
 }

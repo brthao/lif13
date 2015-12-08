@@ -68,6 +68,7 @@ public class MainController {
         p1.getCards().add(c3);
         p1.getCards().add(c4);
         
+        
         Card c5 = new Card("Justin Bieber",1,3,1);
         Card c6 = new Card("Taylor Swift",2,2,3);
         Card c7 = new Card("Katy Perry",3,1,5);

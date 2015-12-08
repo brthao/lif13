@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Card;
 import Model.PartieDeDefJam;
 import View.GameView;
 import java.awt.Component;
@@ -44,14 +45,27 @@ public class GameController {
         this.game = new PartieDeDefJam(mc.getP1(),mc.getP2());
         gv.getTour().setText(String.valueOf(game.getTour()));
         gv.setGame(game);
-        gv.getGame().addObserver(gv);
-        gv.getNextTurn().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gv.getGame().upTour();
-            }
-        });
+        gv.getGame().initiateObserver(gv);
+        gv.getJoueurAct().setText(gv.getGame().getActivePlayer().getNOM());
+        gv.getNbRessources().setText(gv.getGame().getActivePlayer().getNB_RESSOURCES()+"/"+gv.getGame().getActivePlayer().getNB_RESSOURCES_MAX());
+        gv.getPdv().setText(String.valueOf(gv.getGame().getActivePlayer().getPOINTS_DE_VIE()));
+        for(Card c : game.getPlayers()[0].getCards()){
+            c.setBoard(game.getBoard());
+        }
+        for(Card c : game.getPlayers()[1].getCards()){
+            c.setBoard(game.getBoard());
+        }
+        
+        GestionPartie();
+        
+        
+    }
+    
+    public void GestionPartie(){
+        
+        
+        
+        
     }
 
     public MainController getMc() {

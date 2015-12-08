@@ -24,6 +24,7 @@ public class MainView extends javax.swing.JFrame {
    MainController mc;
     /**
      * Creates new form Main
+     * @param mc
      * @param p1
      * @param p2
      * @param g

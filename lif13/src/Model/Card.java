@@ -20,16 +20,22 @@ public class Card extends Observable{
     private boolean exhausted;
     private boolean attacking;
     private boolean defensing;
+    private boolean empty;
     private int x;
     private int y;
     private int YDépart;
     private Player player;
+    private Board board;
 
+    public Card(){
+     this.empty=true;   
+    }
     public Card(String name, int cost, int atk, int def) {
         this.name = name;
         this.cost = cost;
         this.atk = atk;
         this.def = def;
+        this.empty=false;
     }
 
     public String getName() {
@@ -94,14 +100,19 @@ public class Card extends Observable{
 
     public void setX(int x) {
         this.x = x;
+        setChanged();
+	notifyObservers();
     }
 
     public int getY() {
         return y;
+        
     }
 
     public void setY(int y) {
         this.y = y;
+        setChanged();
+	notifyObservers();
     }
 
     public int getYDépart() {
@@ -120,7 +131,33 @@ public class Card extends Observable{
         this.player = player;
     }
    
+     public boolean isEmpty() {
+        return empty;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setEmpty(boolean empty) {
+        this.empty = empty;
+    }
+
+    public void setEmptyTrue() {
+        this.empty = true;
+        this.atk = 0;
+        this.def = 0;
+        this.name = "";
+        this.cost = 0;
+        setChanged();
+	notifyObservers();
+    }
     
+     
     
     
     

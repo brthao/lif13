@@ -5,27 +5,59 @@
  */
 package View;
 
+import Controller.CardController;
 import Model.Card;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JLabel;
 
 /**
  *
  * @author p1508674
  */
-public class CardDisplay extends javax.swing.JPanel implements ActionListener {
+public class CardDisplay extends javax.swing.JPanel implements ActionListener, Observer{
 
     private Card card;
+    private int xpos;
+    private int ypos;
+
+    public Card getCard() {
+        return card;
+    }
+
+    public int getXpos() {
+        return xpos;
+    }
+
+    public void setXpos(int xpos) {
+        this.xpos = xpos;
+    }
+
+    public int getYpos() {
+        return ypos;
+    }
+
+    public void setYpos(int ypos) {
+        this.ypos = ypos;
+    }
+
+   
+    
     /**
      * Creates new form CardDisp
      */
     public CardDisplay() {
+        this.card = new Card();
         initComponents();
     }
     public CardDisplay(Card card){
         this.card = card;
         initComponents();
+        this.card.addObserver(this);
+        this.addMouseListener(new CardController(this.card));
         name.setText(card.getName());
         cost.setText(String.valueOf(card.getCost()));
         attack.setText(String.valueOf(card.getAtk()));
@@ -142,4 +174,41 @@ public class CardDisplay extends javax.swing.JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         this.setBackground(Color.red);
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (card.isEmpty()){
+            name.setText("");
+            cost.setText("");
+            attack.setText("");
+            defense.setText("");
+            nameLabel.setText("");
+            costLabel.setText("");
+            defenseLabel.setText("");
+            attackLabel.setText("");
+      }
+        else{
+        name.setText(card.getName());
+        cost.setText(String.valueOf(card.getCost()));
+        attack.setText(String.valueOf(card.getAtk()));
+        defense.setText(String.valueOf(card.getDef()));
+        nameLabel.setText("Name: ");
+            costLabel.setText("Cost :");
+            defenseLabel.setText("Defense : ");
+            attackLabel.setText("Attack : ");
+            setXpos(card.getX());
+            setYpos(card.getY());
+            
+        }
+        
+    }
+
+    public JLabel getAttack() {
+        return attack;
+    }
+
+    public void setAttack(JLabel attack) {
+        this.attack = attack;
+    }
+    
 }

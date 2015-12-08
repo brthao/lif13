@@ -20,6 +20,7 @@ public class Player extends Observable{
     private int NB_RESSOURCES;
     private int NB_RESSOURCES_MAX;
     private ArrayList<Card> Cards;
+    private boolean hasPlayed;
 
     
 
@@ -27,11 +28,14 @@ public class Player extends Observable{
         this.NOM=Nom;
         this.POINTS_DE_VIE = 10;
         this.NB_RESSOURCES = 0;
+        this.NB_RESSOURCES_MAX = 0;
         Cards=new ArrayList<>();
     }
     
     public Player(){
-        
+        this.POINTS_DE_VIE = 10;
+        this.NB_RESSOURCES = 0;
+        this.NB_RESSOURCES_MAX = 0;
         Cards=new ArrayList<>();
     }
     public void setNOM(String NOM) {
@@ -87,6 +91,14 @@ public class Player extends Observable{
 
     public void setCards(ArrayList<Card>Cards) {
         this.Cards = Cards;
+    }
+
+    public boolean isHasPlayed() {
+        return hasPlayed;
+    }
+
+    public void setHasPlayed(boolean hasPlayed) {
+        this.hasPlayed = hasPlayed;
     }
     
     

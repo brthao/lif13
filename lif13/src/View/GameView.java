@@ -5,16 +5,20 @@
  */
 package View;
 
+import Controller.CardController;
 import Controller.GameController;
+import Controller.MouseAction;
 import Model.PartieDeDefJam;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -32,6 +36,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
     public ArrayList<JPanel> getTabPanels(){
         return this.listPanel;
     }
+   private JPanel gridContainer;
     /**
      * Creates new form GameView
      */
@@ -44,6 +49,15 @@ public class GameView extends javax.swing.JFrame implements Observer{
        initComponents();
        jPanel1.setLayout(new BorderLayout());
        
+       nextPhase.addActionListener(new ActionListener() {
+
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               game.nextPhase();
+               
+           }
+       });
+       
         /*this.pack();
         GameView.setDefaultLookAndFeelDecorated(true);
         this.setExtendedState(GameView.MAXIMIZED_BOTH);*/
@@ -51,7 +65,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
        GridLayout gl = new GridLayout(6,4);
        
        
-       JPanel gridContainer = new JPanel();
+       gridContainer = new JPanel();
        gridContainer.setVisible(true);
        gridContainer.setLayout(gl);
      
@@ -82,8 +96,26 @@ public class GameView extends javax.swing.JFrame implements Observer{
            }
        }
        for (int i =0 ; i<4; i++){
-           tabJPanel[5][i].add(gc.getMc().getVisuCard1().get(i));
-           tabJPanel[0][i].add(gc.getMc().getVisuCard2().get(i));
+           CardDisplay cd1 = gc.getMc().getVisuCard1().get(i);
+           tabJPanel[5][i].add(cd1);
+           cd1.setXpos(5);
+           cd1.setYpos(i);
+           cd1.getCard().setYDépart(cd1.getYpos());
+           cd1.getCard().setY(cd1.getYpos());
+           cd1.getCard().setX(5);
+           CardDisplay cd2 = gc.getMc().getVisuCard2().get(i);
+           tabJPanel[0][i].add(cd2);
+           cd2.setXpos(0);
+           cd2.setYpos(i);
+           cd2.getCard().setYDépart(cd2.getYpos());
+           cd2.getCard().setY(cd2.getYpos());
+           cd2.getCard().setX(0);
+            for(MouseListener m : cd2.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            cd2.removeMouseListener(m);
+                        }
        }
        
        
@@ -102,7 +134,14 @@ public class GameView extends javax.swing.JFrame implements Observer{
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         nbTour = new javax.swing.JLabel();
-        nextTour = new javax.swing.JButton();
+        phase = new javax.swing.JLabel();
+        nextPhase = new javax.swing.JButton();
+        joueurLabel = new javax.swing.JLabel();
+        joueurAct = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        pdv = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        nbRessources = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1100, 850));
@@ -127,12 +166,32 @@ public class GameView extends javax.swing.JFrame implements Observer{
         nbTour.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         nbTour.setText("jLabel2");
 
-        nextTour.setText("Next Turn");
-        nextTour.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextTourActionPerformed(evt);
-            }
-        });
+        phase.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        phase.setText("Phase de défense");
+
+        nextPhase.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        nextPhase.setText("Phase suivante");
+
+        joueurLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        joueurLabel.setText("Joueur Actuel :");
+
+        joueurAct.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        joueurAct.setForeground(new java.awt.Color(0, 0, 204));
+        joueurAct.setText("Joueur 1");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Points de vie :");
+
+        pdv.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        pdv.setForeground(new java.awt.Color(102, 255, 102));
+        pdv.setText("pdv");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Nombre de ressources");
+
+        nbRessources.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        nbRessources.setForeground(new java.awt.Color(0, 255, 255));
+        nbRessources.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,38 +202,58 @@ public class GameView extends javax.swing.JFrame implements Observer{
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(144, 144, 144)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(nbTour)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(nextTour)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                            .addComponent(nbTour))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(joueurLabel)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(phase, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                .addComponent(nextPhase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(joueurAct)
+                            .addComponent(jLabel2)
+                            .addComponent(pdv)
+                            .addComponent(jLabel3)
+                            .addComponent(nbRessources))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(384, 384, 384)
+                        .addGap(47, 47, 47)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nbTour)
-                        .addGap(42, 42, 42)
-                        .addComponent(nextTour))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(271, 271, 271)
+                        .addComponent(phase, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextPhase, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(joueurLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(joueurAct)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pdv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nbRessources)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void nextTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextTourActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nextTourActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,9 +295,16 @@ public class GameView extends javax.swing.JFrame implements Observer{
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel joueurAct;
+    private javax.swing.JLabel joueurLabel;
+    private javax.swing.JLabel nbRessources;
     private javax.swing.JLabel nbTour;
-    private javax.swing.JButton nextTour;
+    private javax.swing.JButton nextPhase;
+    private javax.swing.JLabel pdv;
+    private javax.swing.JLabel phase;
     // End of variables declaration//GEN-END:variables
 
     public void setGame(PartieDeDefJam game) {
@@ -229,13 +315,226 @@ public class GameView extends javax.swing.JFrame implements Observer{
         return game;
     }
 
-    public JButton getNextTurn(){
-        return nextTour;
+    public JLabel getJoueurAct() {
+        return joueurAct;
     }
+
+    public void setJoueurAct(JLabel joueurAct) {
+        this.joueurAct = joueurAct;
+    }
+
+
     
     
     @Override
     public void update(Observable o, Object arg) {
         nbTour.setText(String.valueOf(game.getTour()));
+        updatePhase();
+        updatePlayer();
+        if(game.getPhase()==0 && (String)arg=="Changement"){
+            reverseBoard();
+        }
+        updateAllCards();
     }
+    public void updatePhase(){
+        switch(game.getPhase()){
+            case 0:
+                phase.setText("Phase de defense");
+                phase.setForeground(Color.black);
+                nextPhase.setText("Phase Suivante");
+                break;
+            case 1:
+                phase.setText("Phase d'invocation");
+                phase.setForeground(Color.green);
+                break;
+            case 2:
+                phase.setText("Phase d'attaque");
+                phase.setForeground(Color.red);
+                nextPhase.setText("Joueur suivant");
+                break;
+        }
+    }
+    public void updatePlayer(){
+        if(game.getActivePlayer()==game.getPlayers()[0]){
+            joueurAct.setText(game.getPlayers()[0].getNOM());
+            joueurAct.setForeground(Color.blue);
+            
+        }
+        else{
+            joueurAct.setText(game.getPlayers()[1].getNOM());
+            joueurAct.setForeground(Color.red); 
+        }
+        pdv.setText(String.valueOf(game.getActivePlayer().getPOINTS_DE_VIE()));
+        nbRessources.setText(String.valueOf(game.getActivePlayer().getNB_RESSOURCES()+"/"+game.getActivePlayer().getNB_RESSOURCES_MAX()));
+    }
+    public void reverseBoard(){
+        for(int i = 0 ; i < gc.getMc().getVisuCard1().size() ; i++){
+            CardDisplay current = gc.getMc().getVisuCard1().get(i);
+            
+            if(current != null){
+                //gridContainer.getcompo
+                int xPos;
+                xPos = current.getXpos();
+                
+                switch(xPos){
+                    case 0 :
+                        tabJPanel[5][current.getYpos()].add(current);
+                        current.setXpos(5);
+                        current.getCard().setX(5);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 1 :
+                        tabJPanel[4][current.getYpos()].add(current);
+                        current.setXpos(4);
+                        current.getCard().setX(4);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 2 :
+                        tabJPanel[3][current.getYpos()].add(current);
+                        current.setXpos(3);
+                        current.getCard().setX(3);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 3 :
+                        tabJPanel[2][current.getYpos()].add(current);
+                        current.setXpos(2);
+                        current.getCard().setX(2);
+                         for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                    case 4 :
+                        tabJPanel[1][current.getYpos()].add(current);
+                        current.setXpos(1);
+                        current.getCard().setX(1);
+                         for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                    case 5 :
+                        tabJPanel[0][current.getYpos()].add(current);
+                        current.setXpos(0);
+                        current.getCard().setX(0);
+                         for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                }
+                revalidate();
+                repaint();
+            }
+            
+        }
+        
+         for(int i = 0 ; i < gc.getMc().getVisuCard2().size() ; i++){
+            CardDisplay current = gc.getMc().getVisuCard2().get(i);
+            
+            if(current != null){
+                //gridContainer.getcompo
+                int xPos;
+                xPos = current.getXpos();
+                
+                switch(xPos){
+                    case 0 :
+                        tabJPanel[5][current.getYpos()].add(current);
+                        current.setXpos(5);
+                        current.getCard().setX(5);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 1 :
+                        tabJPanel[4][current.getYpos()].add(current);
+                        current.setXpos(4);
+                        current.getCard().setX(4);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 2 :
+                        tabJPanel[3][current.getYpos()].add(current);
+                        current.setXpos(3);
+                        current.getCard().setX(3);
+                        current.addMouseListener(new CardController(current.getCard()));
+                        break;
+                    case 3 :
+                        tabJPanel[2][current.getYpos()].add(current);
+                        current.setXpos(2);
+                        current.getCard().setX(2);
+                         for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                    case 4 :
+                        tabJPanel[1][current.getYpos()].add(current);
+                        current.setXpos(1);
+                        current.getCard().setX(1);
+                         for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                    case 5 :
+                        tabJPanel[0][current.getYpos()].add(current);
+                        current.setXpos(0);
+                        current.getCard().setX(0);
+                        for(MouseListener m : current.getMouseListeners()){
+                            if(m instanceof MouseAction){
+                                continue;
+                            }
+                            current.removeMouseListener(m);
+                        }
+                        break;
+                }
+                revalidate();
+                repaint();
+            }
+            
+        }
+    }
+    public void updateAllCards(){
+        for (int i=0; i<6;i++){
+            for (int j=0; j<4;j++){
+                if(tabJPanel[i][j].getComponentCount()== 0){
+                    continue;
+                }
+                
+               if(tabJPanel[i][j].getComponent(0) instanceof CardDisplay) {
+                   CardDisplay tmp = (CardDisplay)tabJPanel[i][j].getComponent(0);
+                   tmp.setXpos(tmp.getCard().getX());
+                   tmp.setYpos(tmp.getCard().getY());
+                   tabJPanel[tmp.getXpos()][tmp.getYpos()].add(tmp);
+                   revalidate();
+                   repaint();
+               }
+            } 
+        }
+    }
+
+    public JLabel getNbRessources() {
+        return nbRessources;
+    }
+
+    public void setNbRessources(JLabel nbRessources) {
+        this.nbRessources = nbRessources;
+    }
+
+    public JLabel getPdv() {
+        return pdv;
+    }
+
+    public void setPdv(JLabel pdv) {
+        this.pdv = pdv;
+    }
+    
 }
