@@ -6,6 +6,7 @@
 package View;
 
 import Controller.CardController;
+import Controller.CaseController;
 import Controller.GameController;
 import Controller.MouseAction;
 import Model.PartieDeDefJam;
@@ -33,13 +34,25 @@ public class GameView extends javax.swing.JFrame implements Observer{
     private JPanel tabJPanel[][];
     private PartieDeDefJam game ;
     private GameController gc;
-    public ArrayList<JPanel> getTabPanels(){
-        return this.listPanel;
-    }
+   
    private JPanel gridContainer;
     /**
      * Creates new form GameView
      */
+   
+    /**
+     * Creates new form GameView
+     * @return
+     */
+    public JPanel[][] getTabPanels(){
+        return this.tabJPanel;
+    }
+
+    public ArrayList<JPanel> getListPanel() {
+        return listPanel;
+    }
+    
+    
     public GameView(){
         
     }
@@ -75,6 +88,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
            JPanel tmp = new JPanel();
             tmp.setBorder(BorderFactory.createLineBorder(Color.black));
             tmp.setLayout(new BorderLayout());
+            //tmp.addMouseListener(new CaseController(j,game));
            listPanel.add(tmp);
            tabJPanel[x][j]=tmp;
            if(j==3){

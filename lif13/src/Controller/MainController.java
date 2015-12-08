@@ -86,7 +86,7 @@ public class MainController {
             cd.setVisible(true);
             cd.addMouseListener(new MouseAction(cd));
             visuCard1.add(cd);
-            
+            c.setPlayer(p1);
         }
         
         for(Card c : p2.getCards()){
@@ -94,7 +94,7 @@ public class MainController {
             cd.setVisible(true);
             cd.addMouseListener(new MouseAction(cd));
             visuCard2.add(cd);
-            
+            c.setPlayer(p2);
         }
         
     }

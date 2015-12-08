@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Board;
 import Model.Card;
+import Model.PartieDeDefJam;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +27,19 @@ public class CardController extends MouseAdapter {
         if(this.card.getBoard() == null){
             return;
         }
-        this.card.getBoard().addToBattle(this.card, card.getPlayer(),3 ,3);
+      if(this.card.getGame().getPhase()==1 && card.getPlayer().getNB_RESSOURCES() >= card.getCost()&&this.card.getX()==5 && e.getClickCount()==2 && !e.isConsumed()){
+            this.card.getBoard().addToField(this.card, card.getPlayer(),card.getGame().getPhase());   
+        }
+      if(this.card.isOnField()&&card.getGame().getPhase()==2&&!this.card.isExhausted()){
+          this.card.getBoard().addToBattle(card, null, card.getY(), card.getGame().getPhase());
+      }
+      if(card.getGame().getPhase()==0&&!this.card.isExhausted()){
+          this.card.setGoingToDefend(true);
+          System.out.println("YO !");
+      }
+          
+      
     }
+    
+    
 }

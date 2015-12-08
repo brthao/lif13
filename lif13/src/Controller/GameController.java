@@ -38,11 +38,18 @@ public class GameController {
         gv.setVisible(true);
         
         
-        listPanel = gv.getTabPanels();
+        listPanel = gv.getListPanel();
         listPanel.stream().forEach((j) -> {
             j.addMouseListener(new MouseAction(j));
          });
         this.game = new PartieDeDefJam(mc.getP1(),mc.getP2());
+        
+        for(int i = 0 ; i < 6 ; i++){
+            for(int j = 0 ; j < 4 ; j++){
+                gv.getTabPanels()[i][j].addMouseListener(new CaseController(j,game));
+            }
+        }
+        System.out.println(game.getPhase());
         gv.getTour().setText(String.valueOf(game.getTour()));
         gv.setGame(game);
         gv.getGame().initiateObserver(gv);
@@ -51,9 +58,11 @@ public class GameController {
         gv.getPdv().setText(String.valueOf(gv.getGame().getActivePlayer().getPOINTS_DE_VIE()));
         for(Card c : game.getPlayers()[0].getCards()){
             c.setBoard(game.getBoard());
+            c.setGame(game);
         }
         for(Card c : game.getPlayers()[1].getCards()){
             c.setBoard(game.getBoard());
+            c.setGame(game);
         }
         
         GestionPartie();

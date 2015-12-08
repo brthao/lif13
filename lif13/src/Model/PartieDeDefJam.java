@@ -36,20 +36,29 @@ public class PartieDeDefJam extends Observable{
     }
 
     
-    public void playerAttacked(Card card, Player player, int x, int y){
-        if (this.board.getCardTable()[x][y]!=null)
-            playerDefending(card, this.board.getCardTable()[x][y]);
-        else
-            player.decreasePdv(card.getAtk());
-        if (player.getPOINTS_DE_VIE()<=0)
-            this.setPartieTerminee(true);
+    public void playerAttacked(Card card, Player playerAttacking,Player playerDefending ){
+        boolean defenseActive=false;
+        for(Card c : board.getCardTable()[3])
+            if(c.isDefensing()&&c.getY()==card.getY()){
+                playerDefend(card, c);
+                defenseActive=true;
+                break;
+            }
+        if(defenseActive==false){
+            playerDefending.decreasePdv(card.getAtk()); 
+            this.board.addToField(card, ActivePlayer, this.Phase);
+        }
+                 
+        if (playerDefending.getPOINTS_DE_VIE()<=0)
+           this.setPartieTerminee(true);
         setChanged();
 	notifyObservers();
     }
     
-    public void playerDefending(Card cardAttack, Card cardDefense) {
-        if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()>cardDefense.getAtk())
+    public void playerDefend(Card cardAttack, Card cardDefense) {
+        if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()>cardDefense.getAtk()){
             this.board.destroyCard(cardDefense);
+            this.board.addToField(cardAttack, ActivePlayer, this.Phase);}
         if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
             this.board.destroyCard(cardAttack);
             this.board.destroyCard(cardDefense);
@@ -85,6 +94,19 @@ public class PartieDeDefJam extends Observable{
     }
 
     public void nextPhase(){
+        if(Phase == Defense){
+            if(ActivePlayer==Players[0]){
+                for(Card c : Players[1].getCards()){
+                    if(c.isAttacking())
+                        playerAttacked(c,c.getPlayer(),ActivePlayer);
+                }
+            }
+            if(ActivePlayer==Players[1]){
+                for(Card c : Players[0].getCards()){
+                    if(c.isAttacking())
+                        playerAttacked(c,c.getPlayer(),ActivePlayer);
+                }
+            }}
         if (this.Phase != Attaque)
             this.Phase = this.Phase+1;
         else{

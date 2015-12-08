@@ -58,8 +58,13 @@ public class Board extends Observable{
     }
     
     public void addToField(Card card, Player player, int phase){
-        int field = 4;
+        int field ;
+        
         int defend = 0;
+        if(phase==defend)
+            field = 1;
+        else
+            field = 4;
         this.cardTable[field][card.getYDépart()]=card;
         card.setX(field);
         card.setY(card.getYDépart());   
@@ -68,6 +73,8 @@ public class Board extends Observable{
         card.setDefensing(false);
         if(phase == defend)
             card.setExhausted(true);
+        if(phase == 1)
+            player.decreaseRessources(card.getCost());
         setChanged();
         notifyObservers();
     }
@@ -80,8 +87,9 @@ public class Board extends Observable{
             this.cardTable[battle][y]=card;
             card.setX(battle);
             card.setY(y);
-            if (phase==attack)
+            if (phase==attack){
                 card.setAttacking(true);
+            }
             if (phase==defend)
                 card.setDefensing(true);
             //destroyCard(this.cardTable[card.getX()][card.getY()]);

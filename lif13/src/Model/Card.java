@@ -20,12 +20,14 @@ public class Card extends Observable{
     private boolean exhausted;
     private boolean attacking;
     private boolean defensing;
+    private boolean goingToDefend;
     private boolean empty;
     private int x;
     private int y;
     private int YDépart;
     private Player player;
     private Board board;
+    private PartieDeDefJam game;
 
     public Card(){
      this.empty=true;   
@@ -36,6 +38,7 @@ public class Card extends Observable{
         this.atk = atk;
         this.def = def;
         this.empty=false;
+        this.goingToDefend=false;
     }
 
     public String getName() {
@@ -156,8 +159,28 @@ public class Card extends Observable{
         setChanged();
 	notifyObservers();
     }
+
+    public PartieDeDefJam getGame() {
+        return game;
+    }
+
+    public void setGame(PartieDeDefJam game) {
+        this.game = game;
+    }
     
-     
+     public boolean isOnField(){
+         if (this.x==4)
+             return true;
+         return false;
+     }
+
+    public boolean isGoingToDefend() {
+        return goingToDefend;
+    }
+
+    public void setGoingToDefend(boolean goingToDefend) {
+        this.goingToDefend = goingToDefend;
+    }
     
     
     

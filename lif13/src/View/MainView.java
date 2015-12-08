@@ -258,10 +258,7 @@ public class MainView extends javax.swing.JFrame {
     private void play(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_play
         // TODO add your handling code here:
         mc.getP1().setNOM(textfield1.getText());
-        mc.getP2().setNOM(textfield2.getText());
-
-        System.out.println("p1 = "+mc.getP1().getNOM()+" p2 = "+mc.getP2().getNOM());
-        
+        mc.getP2().setNOM(textfield2.getText());    
         this.setVisible(false);
         mc.setG(new GameController(mc));
         
