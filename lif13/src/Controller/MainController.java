@@ -9,9 +9,6 @@ import Model.Card;
 import Model.Player;
 import View.CardDisplay;
 import View.MainView;
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -69,10 +66,10 @@ public class MainController {
         p1.getCards().add(c4);
         
         
-        Card c5 = new Card("Justin Bieber",1,3,1);
-        Card c6 = new Card("Taylor Swift",2,2,3);
-        Card c7 = new Card("Katy Perry",3,1,5);
-        Card c8 = new Card("Lana Del Rey",4,4,4);
+        Card c5 = new Card("Justin Bieber",1,3,2);
+        Card c6 = new Card("Taylor Swift",2,3,3);
+        Card c7 = new Card("Katy Perry",3,2,6);
+        Card c8 = new Card("Lana Del Rey",4,5,4);
         p2.getCards().add(c5);
         p2.getCards().add(c6);
         p2.getCards().add(c7);

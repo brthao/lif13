@@ -46,10 +46,15 @@ public CaseController(int y, PartieDeDefJam game){
                             System.out.println("TAB["+i+"]["+j+"] = "+game.getBoard().getCardTable()[i][j].getName());
                         }
                     }
-                    System.out.println("yolo :"+game.getBoard().getCardTable()[2][y].getName()+" is attacking ?"+game.getBoard().getCardTable()[2][y].isAttacking()+" is dead? "+ game.getBoard().getCardTable()[2][y].isDestroyed());
+                    try {
+                    //System.out.println("yolo :"+game.getBoard().getCardTable()[2][y].getName()+" is attacking ?"+game.getBoard().getCardTable()[2][y].isAttacking()+" is dead? "+ game.getBoard().getCardTable()[2][y].isDestroyed());
                     if(game.getBoard().getCardTable()[2][y].isAttacking()){
                         System.out.println("il y a bien une carte en face à Y= "+y);
                         game.getBoard().addToBattle(c, c.getPlayer(), y, game.getPhase());
+                    }
+                    }
+                    catch(NullPointerException n){
+                        System.out.println("Pas de carte adverse");
                     }
 
                 }

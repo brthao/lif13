@@ -24,7 +24,8 @@ public class CardController extends MouseAdapter {
     }
     
     public void mouseClicked(MouseEvent e) {
-        if(this.card.getGame().getBoard() == null){
+        
+        if(this.card.getGame() == null){
             return;
         }
       if(this.card.getGame().getPhase()==1 && card.getPlayer().getNB_RESSOURCES() >= card.getCost()&&this.card.getX()==5 && e.getClickCount()==2 && !e.isConsumed()){

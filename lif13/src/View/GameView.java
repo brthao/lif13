@@ -198,14 +198,14 @@ public class GameView extends javax.swing.JFrame implements Observer{
         jLabel2.setText("Points de vie :");
 
         pdv.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        pdv.setForeground(new java.awt.Color(102, 255, 102));
+        pdv.setForeground(new java.awt.Color(255, 153, 153));
         pdv.setText("pdv");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Nombre de ressources");
 
         nbRessources.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        nbRessources.setForeground(new java.awt.Color(0, 255, 255));
+        nbRessources.setForeground(new java.awt.Color(153, 153, 255));
         nbRessources.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -559,8 +559,10 @@ public class GameView extends javax.swing.JFrame implements Observer{
         }
     }
     public void updatePartie(){
-        if(game.isPartieTerminee())
+        if(game.isPartieTerminee()){
             JOptionPane.showMessageDialog(this, "Fin de partie ! Joueur gagnant est " + getOpponent());
+            System.exit(0);
+        }
     }
     public String getOpponent(){
         if(game.getActivePlayer()==game.getPlayers()[0])
