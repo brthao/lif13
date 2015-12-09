@@ -28,6 +28,7 @@ public class Card extends Observable{
     private Player player;
     private Board board;
     private PartieDeDefJam game;
+    private boolean destroyed;
 
     public Card(){
      this.empty=true;   
@@ -39,6 +40,7 @@ public class Card extends Observable{
         this.def = def;
         this.empty=false;
         this.goingToDefend=false;
+        this.destroyed=false;
     }
 
     public String getName() {
@@ -142,10 +144,6 @@ public class Card extends Observable{
         return board;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     public void setEmpty(boolean empty) {
         this.empty = empty;
     }
@@ -166,6 +164,7 @@ public class Card extends Observable{
 
     public void setGame(PartieDeDefJam game) {
         this.game = game;
+        this.board = game.getBoard();
     }
     
      public boolean isOnField(){
@@ -180,6 +179,15 @@ public class Card extends Observable{
 
     public void setGoingToDefend(boolean goingToDefend) {
         this.goingToDefend = goingToDefend;
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+        
     }
     
     

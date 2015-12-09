@@ -210,5 +210,9 @@ public class CardDisplay extends javax.swing.JPanel implements ActionListener, O
     public void setAttack(JLabel attack) {
         this.attack = attack;
     }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
     
 }

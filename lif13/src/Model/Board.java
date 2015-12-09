@@ -58,48 +58,61 @@ public class Board extends Observable{
     }
     
     public void addToField(Card card, Player player, int phase){
+        System.out.println("AddToField "+card.getName());
         int field ;
         
         int defend = 0;
-        if(phase==defend)
+        if(phase==defend && card.getX()==2)
             field = 1;
+        else if(phase==defend && card.getX()==3)
+            field = 4;
         else
             field = 4;
-        this.cardTable[field][card.getYDépart()]=card;
+        
+        System.out.println("field = "+field+" Card  = "+card.getName());
         card.setX(field);
-        card.setY(card.getYDépart());   
-        //destroyCard(this.cardTable[card.getX()][card.getY()]);
+        card.setY(card.getYDépart());
         card.setAttacking(false);
         card.setDefensing(false);
+        card.setExhausted(false);
         if(phase == defend)
             card.setExhausted(true);
         if(phase == 1)
             player.decreaseRessources(card.getCost());
+        this.cardTable[field][card.getYDépart()]=card;
         setChanged();
         notifyObservers();
     }
     
     public void addToBattle(Card card, Player player, int y, int phase){
+        System.out.println("AddToBattle "+card.getName());
         int battle = 3;
         int defend = 0;
         int attack = 2;
         if (!card.isExhausted()){
-            this.cardTable[battle][y]=card;
+
             card.setX(battle);
             card.setY(y);
             if (phase==attack){
                 card.setAttacking(true);
+                System.out.println(card.getName() +" is attacking "+ card.isAttacking());
             }
-            if (phase==defend)
+            else if (phase==defend)
                 card.setDefensing(true);
-            //destroyCard(this.cardTable[card.getX()][card.getY()]);
+        this.cardTable[battle][y]=card;
         }
         setChanged();
         notifyObservers();
     }
     
     public void destroyCard(Card card) {
-            this.cardTable[card.getX()][card.getY()].setEmptyTrue();
+            System.out.println("Je détruit "+card.getName());
+            System.out.println("NOM ="+cardTable[card.getX()][card.getY()].getName());
+            card.setX(30);
+            card.setY(30);
+            card.setDestroyed(true);
+            System.out.println(card.getName());
+            
             setChanged();
             notifyObservers();
     }

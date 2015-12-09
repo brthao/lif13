@@ -46,6 +46,7 @@ public class GameController {
         
         for(int i = 0 ; i < 6 ; i++){
             for(int j = 0 ; j < 4 ; j++){
+                if(i == 2 || i == 3)
                 gv.getTabPanels()[i][j].addMouseListener(new CaseController(j,game));
             }
         }
@@ -57,11 +58,9 @@ public class GameController {
         gv.getNbRessources().setText(gv.getGame().getActivePlayer().getNB_RESSOURCES()+"/"+gv.getGame().getActivePlayer().getNB_RESSOURCES_MAX());
         gv.getPdv().setText(String.valueOf(gv.getGame().getActivePlayer().getPOINTS_DE_VIE()));
         for(Card c : game.getPlayers()[0].getCards()){
-            c.setBoard(game.getBoard());
             c.setGame(game);
         }
         for(Card c : game.getPlayers()[1].getCards()){
-            c.setBoard(game.getBoard());
             c.setGame(game);
         }
         

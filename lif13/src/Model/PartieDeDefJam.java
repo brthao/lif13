@@ -38,12 +38,16 @@ public class PartieDeDefJam extends Observable{
     
     public void playerAttacked(Card card, Player playerAttacking,Player playerDefending ){
         boolean defenseActive=false;
-        for(Card c : board.getCardTable()[3])
+        for(Card c : board.getCardTable()[3]){
+            if(c == null){
+                continue;
+            }
             if(c.isDefensing()&&c.getY()==card.getY()){
                 playerDefend(card, c);
                 defenseActive=true;
                 break;
             }
+        }
         if(defenseActive==false){
             playerDefending.decreasePdv(card.getAtk()); 
             this.board.addToField(card, ActivePlayer, this.Phase);
@@ -57,14 +61,30 @@ public class PartieDeDefJam extends Observable{
     
     public void playerDefend(Card cardAttack, Card cardDefense) {
         if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()>cardDefense.getAtk()){
+            System.out.println("def destruction ");
             this.board.destroyCard(cardDefense);
             this.board.addToField(cardAttack, ActivePlayer, this.Phase);}
-        if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
-            this.board.destroyCard(cardAttack);
+        else if (cardAttack.getAtk()>=cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
+            System.out.println("auto destruction de :"+cardAttack.getName()+" "+cardDefense.getName());
             this.board.destroyCard(cardDefense);
-        }
-        if (cardAttack.getAtk()<cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk())
             this.board.destroyCard(cardAttack);
+            System.out.println(cardAttack.getName()+" "+cardAttack.isDestroyed());
+            System.out.println(cardDefense.getName()+" "+cardDefense.isDestroyed());
+            
+            /**System.out.println("HREXHJREHEHRTEEHE");
+            System.out.println(board.getCardTable()[cardAttack.getX()][cardAttack.getY()]);
+            System.out.println(board.getCardTable()[cardDefense.getX()][cardDefense.getY()]);*/
+        }
+        else if (cardAttack.getAtk()<cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
+            System.out.println("atak destruction ");
+            this.board.destroyCard(cardAttack);
+            this.board.addToField(cardDefense, cardDefense.getPlayer(), Phase);
+        }
+        else if (cardAttack.getAtk()<cardDefense.getDef()&&cardAttack.getDef()>cardDefense.getAtk()){
+            System.out.println("No destruction");
+            this.board.addToField(cardDefense, cardDefense.getPlayer(), Phase);
+            this.board.addToField(cardAttack, ActivePlayer, Phase);
+        }
         setChanged();
 	notifyObservers();
     }
@@ -94,7 +114,14 @@ public class PartieDeDefJam extends Observable{
     }
 
     public void nextPhase(){
-        if(Phase == Defense){
+        if(Phase == Invocation){
+            for(Card c : ActivePlayer.getCards()){
+                if(c==null)
+                    continue;
+                c.setExhausted(false);
+            }
+        }
+        else if(Phase == Defense){
             if(ActivePlayer==Players[0]){
                 for(Card c : Players[1].getCards()){
                     if(c.isAttacking())
@@ -136,7 +163,7 @@ public class PartieDeDefJam extends Observable{
         this.getPlayers()[1].addObserver(o);
     }
 
-    public Boolean getPartieTerminee() {
+    public Boolean isPartieTerminee() {
         return PartieTerminee;
     }
 

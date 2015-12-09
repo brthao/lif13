@@ -9,6 +9,7 @@ import Controller.CardController;
 import Controller.CaseController;
 import Controller.GameController;
 import Controller.MouseAction;
+import Model.Card;
 import Model.PartieDeDefJam;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +22,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -88,7 +90,6 @@ public class GameView extends javax.swing.JFrame implements Observer{
            JPanel tmp = new JPanel();
             tmp.setBorder(BorderFactory.createLineBorder(Color.black));
             tmp.setLayout(new BorderLayout());
-            //tmp.addMouseListener(new CaseController(j,game));
            listPanel.add(tmp);
            tabJPanel[x][j]=tmp;
            if(j==3){
@@ -343,6 +344,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         nbTour.setText(String.valueOf(game.getTour()));
+        updatePartie();
         updatePhase();
         updatePlayer();
         if(game.getPhase()==0 && (String)arg=="Changement"){
@@ -382,6 +384,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
         nbRessources.setText(String.valueOf(game.getActivePlayer().getNB_RESSOURCES()+"/"+game.getActivePlayer().getNB_RESSOURCES_MAX()));
     }
     public void reverseBoard(){
+        Card[][] tmp = new Card[6][4];
         for(int i = 0 ; i < gc.getMc().getVisuCard1().size() ; i++){
             CardDisplay current = gc.getMc().getVisuCard1().get(i);
             
@@ -396,18 +399,22 @@ public class GameView extends javax.swing.JFrame implements Observer{
                         current.setXpos(5);
                         current.getCard().setX(5);
                         current.addMouseListener(new CardController(current.getCard()));
+                        //game.getBoard().getCardTable()[5]
+                        tmp[5][current.getYpos()]=current.getCard();
                         break;
                     case 1 :
                         tabJPanel[4][current.getYpos()].add(current);
                         current.setXpos(4);
                         current.getCard().setX(4);
                         current.addMouseListener(new CardController(current.getCard()));
+                        tmp[4][current.getYpos()]=current.getCard();
                         break;
                     case 2 :
                         tabJPanel[3][current.getYpos()].add(current);
                         current.setXpos(3);
                         current.getCard().setX(3);
                         current.addMouseListener(new CardController(current.getCard()));
+                        tmp[3][current.getYpos()]=current.getCard();
                         break;
                     case 3 :
                         tabJPanel[2][current.getYpos()].add(current);
@@ -419,6 +426,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[2][current.getYpos()]=current.getCard();
                         break;
                     case 4 :
                         tabJPanel[1][current.getYpos()].add(current);
@@ -430,6 +438,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[1][current.getYpos()]=current.getCard();
                         break;
                     case 5 :
                         tabJPanel[0][current.getYpos()].add(current);
@@ -441,6 +450,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[0][current.getYpos()]=current.getCard();
                         break;
                 }
                 revalidate();
@@ -463,18 +473,21 @@ public class GameView extends javax.swing.JFrame implements Observer{
                         current.setXpos(5);
                         current.getCard().setX(5);
                         current.addMouseListener(new CardController(current.getCard()));
+                        tmp[5][current.getYpos()]=current.getCard();
                         break;
                     case 1 :
                         tabJPanel[4][current.getYpos()].add(current);
                         current.setXpos(4);
                         current.getCard().setX(4);
                         current.addMouseListener(new CardController(current.getCard()));
+                        tmp[4][current.getYpos()]=current.getCard();
                         break;
                     case 2 :
                         tabJPanel[3][current.getYpos()].add(current);
                         current.setXpos(3);
                         current.getCard().setX(3);
                         current.addMouseListener(new CardController(current.getCard()));
+                        tmp[3][current.getYpos()]=current.getCard();
                         break;
                     case 3 :
                         tabJPanel[2][current.getYpos()].add(current);
@@ -486,6 +499,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[2][current.getYpos()]=current.getCard();
                         break;
                     case 4 :
                         tabJPanel[1][current.getYpos()].add(current);
@@ -497,6 +511,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[1][current.getYpos()]=current.getCard();
                         break;
                     case 5 :
                         tabJPanel[0][current.getYpos()].add(current);
@@ -508,6 +523,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
                             }
                             current.removeMouseListener(m);
                         }
+                        tmp[0][current.getYpos()]=current.getCard();
                         break;
                 }
                 revalidate();
@@ -515,6 +531,7 @@ public class GameView extends javax.swing.JFrame implements Observer{
             }
             
         }
+         game.getBoard().setCardTable(tmp);
     }
     public void updateAllCards(){
         for (int i=0; i<6;i++){
@@ -523,8 +540,15 @@ public class GameView extends javax.swing.JFrame implements Observer{
                     continue;
                 }
                 
-               if(tabJPanel[i][j].getComponent(0) instanceof CardDisplay) {
+               if(tabJPanel[i][j].getComponent(0) instanceof CardDisplay ) {
                    CardDisplay tmp = (CardDisplay)tabJPanel[i][j].getComponent(0);
+                   if (tmp.getCard().isDestroyed()){
+                       tabJPanel[i][j].remove(tmp);
+                       //tabJPanel[i][j]=new JPanel();
+                        revalidate();
+                        repaint();
+                        continue;
+                   }
                    tmp.setXpos(tmp.getCard().getX());
                    tmp.setYpos(tmp.getCard().getY());
                    tabJPanel[tmp.getXpos()][tmp.getYpos()].add(tmp);
@@ -533,6 +557,16 @@ public class GameView extends javax.swing.JFrame implements Observer{
                }
             } 
         }
+    }
+    public void updatePartie(){
+        if(game.isPartieTerminee())
+            JOptionPane.showMessageDialog(this, "Fin de partie ! Joueur gagnant est " + getOpponent());
+    }
+    public String getOpponent(){
+        if(game.getActivePlayer()==game.getPlayers()[0])
+            return game.getPlayers()[1].getNOM();
+        else
+            return game.getPlayers()[0].getNOM();
     }
 
     public JLabel getNbRessources() {
