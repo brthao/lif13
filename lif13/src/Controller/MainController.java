@@ -23,6 +23,14 @@ public class MainController {
         private Player p1;
         private Player p2;
 
+    public void setP1(Player p1) {
+        this.p1 = p1;
+    }
+
+    public void setP2(Player p2) {
+        this.p2 = p2;
+    }
+
     public ArrayList<CardDisplay> getVisuCard1() {
         return visuCard1;
     }
@@ -78,7 +86,7 @@ public class MainController {
         
         visuCard2 = new ArrayList<>();
         
-          for(Card c : p1.getCards()){
+        for(Card c : p1.getCards()){
             CardDisplay cd = new CardDisplay(c);
             cd.setVisible(true);
             cd.addMouseListener(new MouseAction(cd));

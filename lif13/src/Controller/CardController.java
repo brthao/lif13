@@ -5,10 +5,7 @@
  */
 package Controller;
 
-import Model.Board;
 import Model.Card;
-import Model.PartieDeDefJam;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,12 +14,13 @@ import java.awt.event.MouseEvent;
  * @author Nathan
  */
 public class CardController extends MouseAdapter {
-    private Card card;
+    private final Card card;
     
     public CardController(Card card){
         this.card=card;
     }
     
+    @Override
     public void mouseClicked(MouseEvent e) {
         
         if(this.card.getGame() == null){

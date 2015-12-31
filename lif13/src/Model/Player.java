@@ -56,7 +56,7 @@ public class Player extends Observable{
     
     public void decreasePdv(int i){
         this.setPOINTS_DE_VIE(this.getPOINTS_DE_VIE()-i);
-        System.out.println(this.NOM + ": AIEUH !");
+        System.out.println(this.NOM + ": AIEUH !"+i);
     }
     
     public int getNB_RESSOURCES_MAX() {

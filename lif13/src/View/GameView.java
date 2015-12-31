@@ -6,7 +6,6 @@
 package View;
 
 import Controller.CardController;
-import Controller.CaseController;
 import Controller.GameController;
 import Controller.MouseAction;
 import Model.Card;
@@ -15,7 +14,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -64,18 +62,10 @@ public class GameView extends javax.swing.JFrame implements Observer{
        initComponents();
        jPanel1.setLayout(new BorderLayout());
        
-       nextPhase.addActionListener(new ActionListener() {
-
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               game.nextPhase();
-               
-           }
+       nextPhase.addActionListener((ActionEvent e) -> {
+           game.nextPhase();
        });
        
-        /*this.pack();
-        GameView.setDefaultLookAndFeelDecorated(true);
-        this.setExtendedState(GameView.MAXIMIZED_BOTH);*/
        
        GridLayout gl = new GridLayout(6,4);
        
@@ -298,10 +288,8 @@ public class GameView extends javax.swing.JFrame implements Observer{
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GameView().setVisible(true);
         });
     }
 

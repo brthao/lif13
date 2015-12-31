@@ -168,9 +168,7 @@ public class Card extends Observable{
     }
     
      public boolean isOnField(){
-         if (this.x==4)
-             return true;
-         return false;
+         return this.x==4;
      }
 
     public boolean isGoingToDefend() {

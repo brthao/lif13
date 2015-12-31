@@ -9,16 +9,14 @@ import Model.Card;
 import Model.PartieDeDefJam;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Bryan
  */
 public class CaseController extends MouseAdapter {
-private PartieDeDefJam game;
-private int y;
+private final PartieDeDefJam game;
+private final int y;
 public CaseController(int y, PartieDeDefJam game){
     this.y = y;
     this.game = game;
@@ -28,16 +26,14 @@ public CaseController(int y, PartieDeDefJam game){
         System.out.println("Bonjour"+" "+game.getPhase());
         if(game.getPhase()==0){
             for(Card c : game.getBoard().getCardTable()[4]){
-                if(c==null || c.getName()== null || c.getName()==""){
+                if(c==null || c.getName()== null || "".equals(c.getName())){
                     System.out.println("continue");
                 continue;
                 }
 
                 System.out.println(c.getName()+"is going to defend ? "+c.isGoingToDefend());
                 if(c.isGoingToDefend()){
-                    System.out.println("Hello !");
                     c.setGoingToDefend(false);
-                    System.out.println("y = "+y);
                     for(int i = 0 ; i < 6 ; i++){
                         for(int j = 0 ; j < 4 ; j++){
                             if(game.getBoard().getCardTable()[i][j] == null){

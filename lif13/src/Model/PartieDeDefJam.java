@@ -13,7 +13,7 @@ import java.util.Observer;
  * @author p1511624
  */
 public class PartieDeDefJam extends Observable{
-    private Player[] Players ;
+    private final Player[] Players ;
     private Board board;
     private Player ActivePlayer;
     private int Phase;
@@ -39,7 +39,7 @@ public class PartieDeDefJam extends Observable{
     public void playerAttacked(Card card, Player playerAttacking,Player playerDefending ){
         boolean defenseActive=false;
         for(Card c : board.getCardTable()[3]){
-            if(c == null){
+            if(c == null || c.isDestroyed()){
                 continue;
             }
             if(c.isDefensing()&&c.getY()==card.getY()){
@@ -48,7 +48,7 @@ public class PartieDeDefJam extends Observable{
                 break;
             }
         }
-        if(defenseActive==false){
+        if(defenseActive==false && !card.isDestroyed()){
             playerDefending.decreasePdv(card.getAtk()); 
             this.board.addToField(card, ActivePlayer, this.Phase);
         }
@@ -71,9 +71,6 @@ public class PartieDeDefJam extends Observable{
             System.out.println(cardAttack.getName()+" "+cardAttack.isDestroyed());
             System.out.println(cardDefense.getName()+" "+cardDefense.isDestroyed());
             
-            /**System.out.println("HREXHJREHEHRTEEHE");
-            System.out.println(board.getCardTable()[cardAttack.getX()][cardAttack.getY()]);
-            System.out.println(board.getCardTable()[cardDefense.getX()][cardDefense.getY()]);*/
         }
         else if (cardAttack.getAtk()<cardDefense.getDef()&&cardAttack.getDef()<=cardDefense.getAtk()){
             System.out.println("atak destruction ");
@@ -186,8 +183,17 @@ public class PartieDeDefJam extends Observable{
             this.ActivePlayer=Players[1];
         else
             this.ActivePlayer=Players[0];
+        //ici
+        
+        
         setChanged();
         notifyObservers("Changement");
+        
+        if(this.ActivePlayer instanceof IAPlayer){
+            IAPlayer ia = (IAPlayer)this.ActivePlayer;
+            ia.jouerTour();
+        }
+        
     }
     
 }

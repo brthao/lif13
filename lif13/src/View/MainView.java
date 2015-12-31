@@ -8,11 +8,9 @@ package View;
 import Controller.GameController;
 import Controller.MainController;
 import Model.Card;
-import Model.Player;
-import java.awt.BorderLayout;
+import Model.IAPlayer;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Label;
 import javax.swing.JPanel;
 
 /**
@@ -25,9 +23,6 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Creates new form Main
      * @param mc
-     * @param p1
-     * @param p2
-     * @param g
      */
     public MainView(MainController mc) {
         this.mc = mc;
@@ -52,21 +47,9 @@ public class MainView extends javax.swing.JFrame {
         for(CardDisplay cd : mc.getVisuCard2()){
             j2.add(cd);
         }
-        /*j1.add(cd1);
-        j1.add(cd2);
-        */
         
         jPanel1.add(j1);
         jPanel2.add(j2);
-        
-        
-        
-        /*jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(cd1,BorderLayout.CENTER);
-        cd1.setVisible(true);
-        jPanel1.revalidate();
-        jPanel1.repaint();*/
-
 
     }
     public MainView(){
@@ -88,10 +71,12 @@ public class MainView extends javax.swing.JFrame {
         player1 = new javax.swing.JLabel();
         textfield1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
+        IA1 = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
         player2 = new javax.swing.JLabel();
         textfield2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        IA2 = new javax.swing.JRadioButton();
         playButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -126,6 +111,8 @@ public class MainView extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        IA1.setText("IA");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -138,6 +125,8 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(player1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(IA1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -147,7 +136,8 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(player1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textfield1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IA1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -177,6 +167,8 @@ public class MainView extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        IA2.setText("IA");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -189,16 +181,19 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(player2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(textfield2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(IA2)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(player2)
-                    .addComponent(textfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textfield2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(IA2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -258,6 +253,30 @@ public class MainView extends javax.swing.JFrame {
         mc.getP1().setNOM(textfield1.getText());
         mc.getP2().setNOM(textfield2.getText());    
         this.setVisible(false);
+        
+        if(IA1.isSelected()){
+            System.out.println("IA1");
+            IAPlayer ia1 = new IAPlayer();
+            ia1.setNOM(mc.getP1().getNOM());
+             for(Card c : mc.getP1().getCards()){
+                c.setPlayer(ia1);
+                ia1.getCards().add(c);
+            }
+            
+            mc.setP1(ia1);
+        }
+        if(IA2.isSelected()){
+            System.out.println("IA2");
+            IAPlayer ia2 = new IAPlayer();
+            ia2.setNOM(mc.getP2().getNOM());
+            for(Card c : mc.getP2().getCards()){
+                c.setPlayer(ia2);
+                ia2.getCards().add(c);
+            }
+            
+            mc.setP2(ia2);
+        }
+        
         mc.setG(new GameController(mc));
         
     }//GEN-LAST:event_play
@@ -291,15 +310,15 @@ public class MainView extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainView().setVisible(true);
         });
     }
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton IA1;
+    private javax.swing.JRadioButton IA2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

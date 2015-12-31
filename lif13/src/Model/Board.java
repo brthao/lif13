@@ -12,8 +12,8 @@ import java.util.Observable;
  * @author p1508674
  */
 public class Board extends Observable{
-    private int length;
-    private int width;
+    private final int length;
+    private final int width;
     int HandJ1 = 5;
     int FieldJ1 = 4;
     int BattleJ1 = 3;
@@ -77,8 +77,10 @@ public class Board extends Observable{
         card.setExhausted(false);
         if(phase == defend)
             card.setExhausted(true);
-        if(phase == 1)
+        if(phase != 1) {
+        } else {
             player.decreaseRessources(card.getCost());
+        }
         this.cardTable[field][card.getYDépart()]=card;
         setChanged();
         notifyObservers();
@@ -107,7 +109,11 @@ public class Board extends Observable{
     
     public void destroyCard(Card card) {
             System.out.println("Je détruit "+card.getName());
+            try{
             System.out.println("NOM ="+cardTable[card.getX()][card.getY()].getName());
+            }catch(ArrayIndexOutOfBoundsException e){
+                System.out.println("carte deja détruite");
+            }
             card.setX(30);
             card.setY(30);
             card.setDestroyed(true);

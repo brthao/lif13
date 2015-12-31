@@ -6,11 +6,9 @@
 package Controller;
 
 import Model.Card;
+import Model.IAPlayer;
 import Model.PartieDeDefJam;
 import View.GameView;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -20,7 +18,7 @@ import javax.swing.JPanel;
  */
 public class GameController {
 
-    private MainController mc;
+    private final MainController mc;
     private GameView gv;
     private PartieDeDefJam game;
     
@@ -70,9 +68,12 @@ public class GameController {
     }
     
     public void GestionPartie(){
-        
-        
-        
+         if(game.getActivePlayer() instanceof IAPlayer){
+             System.out.println("Joueur 1 est IA");
+             IAPlayer ia = (IAPlayer)game.getActivePlayer();
+             ia.jouerTour();
+             
+         }
         
     }
 
